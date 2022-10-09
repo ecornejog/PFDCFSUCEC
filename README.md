@@ -9,7 +9,7 @@ Activate the virtual env:
 ### `.\env\Scripts\activate`
 
 Install the required packages:
-### `pip install flask flask-cors psycopg2 python-decouple python-dotenv autopep8 `
+### `pip install flask flask-cors psycopg2 python-decouple python-dotenv autopep8 flask[async] `
 
 Create a .env file (in the root of the project) for the environment variable:
 

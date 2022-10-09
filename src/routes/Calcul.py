@@ -1,4 +1,7 @@
-from flask import Blueprint, jsonify, request, redirect, url_for
+from time import sleep
+from urllib import response
+from flask import Blueprint, jsonify, request
+from flask import Response
 import uuid
 from datetime import datetime
 from utils.DateFormat import DateFormat
@@ -22,30 +25,10 @@ def get_calculs():
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
 
-@main.route('/calcul/<guid>', methods=['PUT','GET'])
-def calcul(guid):
-    try:
-        calcul_by_guid = CalculModel.get_calcul_by_guid(guid)
-        calcul = Calcul(str(calcul_by_guid['guid']), calcul_by_guid['status'], calcul_by_guid['date_debut'],
-                        calcul_by_guid['date_fin'], calcul_by_guid['montant'], calcul_by_guid['resultat'])
-        #calcul.resultat = resultat.resultat(calcul.montant)
-        #calcul.status = bool(1)
-        #calcul.date_fin = DateFormat.convert_date(datetime.now())
-        #affected_rows = CalculModel.calcul(calcul)
-        thread = threading.Thread(target=resultat.resultat(calcul.guid))
-        thread.daemon = True         # Daemonize 
-        thread.start()
-        #return jsonify(calcul.guid)
-        #if affected_rows == 1:
-        #    return jsonify(calcul.guid)
-        #else:
-        #    return jsonify({'message': "Error on insert"}), 500
 
-    except Exception as ex:
-        return jsonify({'message': str(ex)}), 500
-
+# do the register of the calcul, return the guid to the client and after executes the function to realize the calcul
 @main.route('/lancerCalcul', methods=['POST'])
-async def lancer_Calcul():
+def lancer_Calcul():
     try:
         guid = uuid.uuid4()
         status = bool(0)
@@ -57,17 +40,18 @@ async def lancer_Calcul():
                         date_fin, montant, res)
 
         affected_rows = CalculModel.lancer_Calcul(calcul)
+        response = Response(str(guid))
+
+        @response.call_on_close
+        def on_close():
+            print(str(guid))
+            resultat.resultat(str(guid))
+
         if affected_rows == 1:
-            await resultat.resultat(calcul.guid)
-            #thread = threading.Thread(target=resultat.resultat(guid))
-            #thread.daemon = True         # Daemonize 
-            #thread.start()
-            #redirect(url_for('calcul_blueprint.calcul', guid = calcul.guid))
-            return jsonify(calcul.guid)
-            #return 
+            return response
+
         else:
             return jsonify({'message': "Error on insert"}), 500
 
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
-
