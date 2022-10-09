@@ -1,5 +1,7 @@
-from flask import Flask
+from time import sleep
+from flask import Flask, Response, request
 from flask_cors import CORS
+from utils.resultat import resultat
 
 from config import config
 

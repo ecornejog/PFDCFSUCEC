@@ -5,7 +5,7 @@ from .entities.Calcul import Calcul
 class CalculModel():
 
     @classmethod
-    def get_calculs(self):
+    def get_calculs(self):  # get all the calculs
         try:
             connection = get_connection()
             calculs = []
@@ -23,17 +23,18 @@ class CalculModel():
             return calculs
         except Exception as ex:
             raise Exception(ex)
-            
+
     @classmethod
-    def get_calcul_by_guid(self, guid):
+    def get_calcul_by_guid(self, guid):  # get the calcul from an GUID
         try:
             connection = get_connection()
 
             with connection.cursor() as cursor:
-                cursor.execute("SELECT guid, status, date_debut, date_fin, montant, resultat FROM test_projet WHERE guid = %s", (guid,))
+                cursor.execute(
+                    "SELECT guid, status, date_debut, date_fin, montant, resultat FROM test_projet WHERE guid = %s", (guid,))
                 row = cursor.fetchone()
 
-                calcul= None
+                calcul = None
                 if row != None:
                     calcul = Calcul(row[0], row[1], row[2],
                                     row[3], row[4], row[5])
@@ -45,7 +46,7 @@ class CalculModel():
             raise Exception(ex)
 
     @classmethod
-    def lancer_Calcul(self, montant):
+    def lancer_Calcul(self, montant):  # post the calcul in the database
         try:
             connection = get_connection()
 
@@ -61,9 +62,9 @@ class CalculModel():
             return affected_rows
         except Exception as ex:
             raise Exception(ex)
-    
+
     @classmethod
-    def calcul(self,calcul):
+    def calcul(self, calcul):  # update the calcul in the database after the excecution of resultat.resultat(guid)
 
         try:
             connection = get_connection()
@@ -73,8 +74,8 @@ class CalculModel():
                 date_fin = %s, 
                 resultat = %s
                 WHERE test_projet.guid = %s""",
-                               (calcul.status,calcul.date_fin, 
-                               calcul.resultat,calcul.guid))
+                               (calcul.status, calcul.date_fin,
+                                calcul.resultat, calcul.guid))
                 affected_rows = cursor.rowcount
                 connection.commit()
 
