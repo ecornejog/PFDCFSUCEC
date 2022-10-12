@@ -56,7 +56,7 @@ def startCalcul():
             return jsonify({'messages': "Error on insert"}), 500
 
     except Exception as ex:
-        return jsonify({'messagez': str(ex)}), 500
+        return jsonify({'messages': str(ex)}), 500
 
 
 
