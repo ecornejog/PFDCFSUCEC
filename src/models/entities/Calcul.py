@@ -15,8 +15,8 @@ class Calcul():
         return {
             'guid': self.guid,
             'status': self.status,
-            'date_debut': DateFormat.convert_date(self.date_debut),
-            'date_fin': DateFormat.convert_date(self.date_fin),
+            'date_debut': self.date_debut,
+            'date_fin': self.date_fin,
             'montant': self.montant,
             'resultat': self.resultat
         }

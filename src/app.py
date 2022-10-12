@@ -3,7 +3,7 @@ from flask import Flask, Response, request
 from flask_cors import CORS
 from utils.resultat import resultat
 
-from config import config
+#from config import config
 
 # Routes
 from routes import Calcul
@@ -18,10 +18,13 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.config.from_object(config['development'])
+    #app.config.from_object(config['development'])
 
     # Blueprints
-    app.register_blueprint(Calcul.main, url_prefix='/api/calcul')
+    app.register_blueprint(Calcul.main, url_prefix='/api/v1')
+    app.register_blueprint(Calcul.main, url_prefix='/',name="def")
+
+
 
     # Error handlers
     app.register_error_handler(404, page_not_found)

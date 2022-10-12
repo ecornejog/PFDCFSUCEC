@@ -6,10 +6,14 @@ from decouple import config
 def get_connection():
     try:
         return psycopg2.connect(
-            host=config('PGSQL_HOST'),
-            user=config('PGSQL_USER'),
-            password=config('PGSQL_PASSWORD'),
-            database=config('PGSQL_DATABASE')
+            host='localhost',
+            user='postgres',
+            password='azerty',
+            database='Poc_Ec'
         )
     except DatabaseError as ex:
         raise ex
+
+
+# password =  azerty
+# port = 5432
