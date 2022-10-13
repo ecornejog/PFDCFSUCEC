@@ -29,6 +29,26 @@ class CalculService():
             return None
 
 
+    @classmethod
+    def updateCalcul(self, calcul):
+
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute("""UPDATE calcul set status=%s where guid=%s """,
+                               (calcul['status'],calcul['guid'] ))
+                affected_rows = 1
+                connection.commit()
+
+            connection.close()
+            print(calcul)
+            return calcul
+        except Exception as ex:
+            print(str(ex))
+            return None
+
+
 
     @classmethod
     def get_calculs(self):  # get all the calculs

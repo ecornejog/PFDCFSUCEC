@@ -35,6 +35,8 @@ def startCalcul():
         status = 'en_cours'
         date_debut = datetime.now()
         date_fin = None
+        #Modify montant
+        
         montant = request.json['montant']
         res = None
         calcul = Calcul(str(guid), status, DateFormat.convert_date(date_debut),
@@ -54,7 +56,7 @@ def startCalcul():
 
         else:
             return jsonify({'messages': "Error on insert"}), 500
-
+            
     except Exception as ex:
         return jsonify({'messages': str(ex)}), 500
 
@@ -86,7 +88,7 @@ def consulterStatus(guid):
         
         if(delta >15):  # update status to timeout
                 calc['status']='timeout'
-                res=CalculService.saveCalcul(calc)
+                res=CalculService.updateCalcul(calc)
                 status='timeout'
         # en cours || timeout
     return jsonify({'message': str(status)}), 200
@@ -125,7 +127,7 @@ def consultResult(guid):
                 status='timeout'
 
         # en cours || timeout
-    return jsonify({'message': "Resultat en "+str(status)}), 200
+    return jsonify({'message': "Resultat  "+str(status)}), 200
 
 
 
