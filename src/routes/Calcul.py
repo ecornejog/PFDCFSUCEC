@@ -30,6 +30,7 @@ def get_calculs():
 @main.route('/startCalcul', methods=['POST'])
 def startCalcul():
     try:
+
         guid = uuid.uuid4()
         print(guid)
         status = 'en_cours'
@@ -67,6 +68,7 @@ def startCalcul():
 def consulterStatus(guid):
 
     guid=request.view_args['guid']
+    
     calc=CalculService.getCalculByGuid(guid)
 
     if(calc== None):
