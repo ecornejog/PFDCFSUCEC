@@ -1,6 +1,6 @@
 venv/
 .env
-db.sql
+
 
 __pycache__/
 *.py[cod]
