@@ -1,0 +1,6 @@
+flask==2.2.2
+flask-cors==3.0.10
+psycopg2-binary==2.9.4
+python-decouple==3.6
+python-dotenv==0.21.0
+autopep8==1.7.0
