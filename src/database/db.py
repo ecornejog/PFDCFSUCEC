@@ -8,8 +8,8 @@ def get_connection():
         return psycopg2.connect(
             host='localhost',
             user='postgres',
-            password='azerty',
-            database='Poc_Ec'
+            password='LosJotit4s4!',
+            database='test_projet'
         )
     except DatabaseError as ex:
         raise ex
