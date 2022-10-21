@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  postgres:
+      image: postgres:13.1
+      container_name: postgres
+      healthcheck:
+        test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+        timeout: 45s
+        interval: 10s
+        retries: 10
+      restart: always
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=postgres
+        - APP_DB_USER=docker
+        - APP_DB_PASS=docker
+        - APP_DB_NAME=docker
+      volumes:
+        - ./db:/docker-entrypoint-initdb.d/
+      ports:
+        - 5432:5432
+  api:
+    build:
+      context: ./
+    ports:
+      - 5000:5000
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+    depends_on:
+      - postgres
+  

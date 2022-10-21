@@ -6,10 +6,10 @@ from decouple import config
 def get_connection():
     try:
         return psycopg2.connect(
-            host='localhost',
-            user='postgres',
-            password='LosJotit4s4!',
-            database='test_projet'
+            host='postgres',
+            user='docker',
+            password='docker',
+            database='docker'
         )
     except DatabaseError as ex:
         raise ex

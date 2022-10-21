@@ -18,3 +18,10 @@ Create a .env file (in the root of the project) for the environment variable:
 ### `PGSQL_USER=user`
 ### `PGSQL_PASSWORD=password`
 ### `PGSQL_DB=database`
+
+## Docker Part
+
+First build the docker:  
+### `docker compose build`  
+And then up the docker:  
+### `docker compose up`  
