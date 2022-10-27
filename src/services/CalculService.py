@@ -124,7 +124,7 @@ class CalculService():
         if (calcul.montant):
             calcul.resultat = calcul.montant*1.05
         sleep(15)
-        calcul.status = 'termine'
+        calcul.status = 'finished'
         calcul.date_fin = DateFormat.convert_date(datetime.now())
         affected_rows = CalculService.saveCalcul(calcul)
         return affected_rows

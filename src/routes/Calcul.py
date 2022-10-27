@@ -33,15 +33,19 @@ def startCalcul():
 
         guid = uuid.uuid4()
         print(guid)
-        status = 'en_cours'
+        status = 'running'
         date_debut = datetime.now()
         date_fin = None
         #Modify montant
         
-        montant = request.json['montant']
+        amount = request.json['amount']
+        if(amount <0):
+        	return jsonify({'messages': "Negative amount"}), 401
+        	
+        
         res = None
         calcul = Calcul(str(guid), status, DateFormat.convert_date(date_debut),
-                        date_fin, montant, res)
+                        date_fin, amount, res)
 
         affected_rows = CalculService.saveCalcul(calcul.to_JSON())
         print("affected ",affected_rows)
@@ -129,7 +133,7 @@ def consultResult(guid):
                 status='timeout'
 
         # en cours || timeout
-    return jsonify({'message': "Resultat  "+str(status)}), 200
+    return jsonify({'message': str(status)}), 200
 
 
 
